@@ -15,14 +15,13 @@ const UserList = () => {
         );
 
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error("Network response failed");
         }
 
         const data = await response.json();
         console.log(data);
         setUsers(data);
       } catch (error) {
-        // Handle any errors that occurred during the request
         console.error("Error fetching data:", error);
         throw error;
       }
@@ -31,12 +30,12 @@ const UserList = () => {
   }, []);
 
   const handleDelete = (userId: number) => {
-    console.log(`Deleting user with ID ${userId}`);
+    const updatedUsers = users.filter((user: any) => user.id !== userId);
+
+    setUsers(updatedUsers);
   };
 
   const handleViewDetails = (user: any) => {
-    console.log("USERRRR", user);
-    console.log(`Viewing details for user: ${user.username}`);
     setSelectedUser(user);
     setShowProfile(true);
   };
